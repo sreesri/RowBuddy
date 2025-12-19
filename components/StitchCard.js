@@ -1,16 +1,26 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { COLORS, SIZE } from "../constants";
 import { Minus, Plus } from "lucide-react-native";
 
-const StitchCard = ({ name, totalCount, currentCount }) => {
+const StitchCard = ({
+  id,
+  name,
+  totalCount,
+  currentCount,
+  onIncrement,
+  onDecrement,
+}) => {
   return (
     <View style={styles.rootContainer}>
       <Text style={styles.name}>{name}</Text>
       <View style={styles.countContainer}>
-        <View style={styles.incrementContainer}>
+        <Pressable
+          style={styles.incrementContainer}
+          onPress={() => onDecrement(id)}
+        >
           <Minus />
-        </View>
+        </Pressable>
         <View style={styles.currentCountContainer}>
           <Text style={styles.text1}>{currentCount}</Text>
         </View>
@@ -23,9 +33,12 @@ const StitchCard = ({ name, totalCount, currentCount }) => {
           </>
         ) : null}
 
-        <View style={styles.incrementContainer}>
+        <Pressable
+          style={styles.incrementContainer}
+          onPress={() => onIncrement(id)}
+        >
           <Plus />
-        </View>
+        </Pressable>
       </View>
     </View>
   );

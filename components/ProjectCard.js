@@ -3,11 +3,11 @@ import React from "react";
 import { COLORS, PROJECT_SCREEN, SIZE } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 
-const ProjectCard = ({ name }) => {
+const ProjectCard = ({ name, id }) => {
   const navigate = useNavigation();
 
   function pressHandler() {
-    navigate.navigate(PROJECT_SCREEN);
+    navigate.navigate(PROJECT_SCREEN, { projectId: id, projectName: name });
   }
   return (
     <Pressable

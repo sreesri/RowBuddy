@@ -1,18 +1,21 @@
 import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { COLORS, SIZE } from "../constants";
 import SaveAndCancel from "./SaveAndCancel";
 
-const ProjectModal = ({ visible, toggleVisibility }) => {
-  function handleSave() {
-    console.log("sdfds");
+const ProjectModal = ({ visible, toggleVisibility, onSaveProject }) => {
+  const [projectName, setProjectName] = useState("");
 
-    toggleVisibility();
+  function handleSave() {
+    if (projectName.trim()) {
+      onSaveProject(projectName);
+      setProjectName("");
+      toggleVisibility();
+    }
   }
 
   function handleCancel() {
-    console.log("sdfsfdfg");
-
+    setProjectName("");
     toggleVisibility();
   }
 
@@ -26,7 +29,14 @@ const ProjectModal = ({ visible, toggleVisibility }) => {
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.heading}>Project Name</Text>
-          <TextInput style={styles.input} textAlign="center" value="ABCD" />
+          <TextInput
+            style={styles.input}
+            textAlign="center"
+            placeholder="Enter project name"
+            placeholderTextColor={COLORS.primary}
+            value={projectName}
+            onChangeText={setProjectName}
+          />
           <SaveAndCancel onSave={handleSave} onCancel={handleCancel} />
         </View>
       </View>

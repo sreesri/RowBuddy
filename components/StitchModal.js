@@ -1,18 +1,24 @@
 import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { COLORS, SIZE } from "../constants";
 import SaveAndCancel from "./SaveAndCancel";
 
-const StitchModal = ({ visible, toggleVisibility }) => {
-  function handleSave() {
-    console.log("sdfds");
+const StitchModal = ({ visible, toggleVisibility, onSaveStitch }) => {
+  const [stitchName, setStitchName] = useState("");
+  const [totalCount, setTotalCount] = useState("");
 
-    toggleVisibility();
+  function handleSave() {
+    if (stitchName.trim()) {
+      onSaveStitch(stitchName, totalCount);
+      setStitchName("");
+      setTotalCount("");
+      toggleVisibility();
+    }
   }
 
   function handleCancel() {
-    console.log("sdfsfdfg");
-
+    setStitchName("");
+    setTotalCount("");
     toggleVisibility();
   }
 
@@ -26,9 +32,24 @@ const StitchModal = ({ visible, toggleVisibility }) => {
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.heading}>Stitch Name</Text>
-          <TextInput style={styles.input} textAlign="center" value="ABCD" />
-          <Text style={styles.heading}>End Count</Text>
-          <TextInput style={styles.input} textAlign="center" value="ABCD" />
+          <TextInput
+            style={styles.input}
+            textAlign="center"
+            placeholder="Enter stitch name"
+            placeholderTextColor={COLORS.primary}
+            value={stitchName}
+            onChangeText={setStitchName}
+          />
+          <Text style={styles.heading}>End Count (Optional)</Text>
+          <TextInput
+            style={styles.input}
+            textAlign="center"
+            placeholder="Enter total count"
+            placeholderTextColor={COLORS.primary}
+            value={totalCount}
+            onChangeText={setTotalCount}
+            keyboardType="numeric"
+          />
           <SaveAndCancel onSave={handleSave} onCancel={handleCancel} />
         </View>
       </View>
